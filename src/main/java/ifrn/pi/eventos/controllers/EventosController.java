@@ -8,7 +8,7 @@ import ifrn.pi.eventos.models.Evento;
 
 @Controller
 public class EventosController {
-	
+	 
 	@RequestMapping("/eventos/form")
 	public String form() {
 		return "formEvento";
