@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 
 import ifrn.pi.eventos.models.Evento;
 import ifrn.pi.eventos.repositories.EventoRepository;
@@ -17,7 +17,7 @@ public class EventosController {
 	
 	@RequestMapping("/eventos/form")
 	public String form() {
-		return "formEvento";
+		return "eventos/formEvento";
 	}
 	
 	@PostMapping("/evento")
@@ -38,7 +38,7 @@ public class EventosController {
 		System.out.println(evento);
 		er.save(evento);
 		
-		return "evento-adicionado";
+		return "eventos/evento-adicionado";
 	}
 
 }
