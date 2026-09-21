@@ -1,106 +1,215 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<title>Eventos</title>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+    <title>Eventos</title>
 </head>
+
 <body>
-	<div th:replace="menu :: menu"></div>
 
-	<div class="container">
-		<h1>Detalhes do evento</h1>
-		<div class="row">
-			<div class="col s12">
-				<div class="card ">
-					<div class="card-content ">
-						<span class="card-title">Evento</span>
-						<p>
-							<strong>Id: <span th:text="${evento.id}">1</span>
-							</strong>
-						</p>
-						<p>
-							<strong>Nome: <span th:text="${evento.nome}">Aniversário
-									do josé</span>
-							</strong>
-						</p>
-						<p>
-							<strong>Local: <span th:text="${evento.local}">Club</span>
-							</strong>
-						</p>
-						<p>
-							<strong>Data: <span th:text="${evento.data}">25/02/2021</span>
-							</strong>
-						</p>
-						<p>
-							<strong>Horário: <span th:text="${evento.horario}">20:00</span>
-							</strong>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<h1>Detalhes do evento</h1>
-			<div class="row">
-				<div class="col s12">
-					<div class="card ">
-						<div class="card-content ">
-							<span class="card-title">Adicionar Convidado</span>
-							<form action="" method="post">
-								<div>
-									<label>Nome: </label> <input type="text" name="nome">
-								</div>
-								<div>
-									<label>RG: </label> <input type="text" name="rg">
-								</div>
-								<div>
-									<button type="submit" class="btn">Salvar</button>
-									<button type="reset" class="btn">Limpar</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col s12">
-					<div class="card ">
-						<div class="card-content ">
-							<span class="card-title">Convidados</span>
-							<table class="highlight">
-								<thead>
-									<tr>
-										<th>Id</th>
-										<th>Nome</th>
-										<th>RG</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="c : ${convidados}">
-										<td th:text="${c.id}">Id</td>
-										<td th:text="${c.nome}">Id</td>
-										<td th:text="${c.rg}">Id</td>
-										<td><a
-											th:href="@{/eventos/{idEvento}/convidados/{idConvidado}/selecionar(idEvento=${evento.id}, idConvidado=${c.id})}">
-												<i class="material-icons">edit</i>
-										</a> <a
-											th:href="@{/eventos/{idEvento}/convidados/{idConvidado}/remover(idEvento=${evento.id}, idConvidado=${c.id})}">
-												<i class="material-icons">delete</i>
-										</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
+    <div th:replace="menu :: menu"></div>
+
+    <div class="container">
+
+        <!-- DADOS DO EVENTO -->
+        <h1>Detalhes do evento</h1>
+
+        <div class="row">
+            <div class="col s12">
+
+                <div class="card">
+                    <div class="card-content">
+
+                        <span class="card-title">Evento</span>
+
+                        <p>
+                            <strong>
+                                Id:
+                                <span th:text="${evento.id}">1</span>
+                            </strong>
+                        </p>
+
+                        <p>
+                            <strong>
+                                Nome:
+                                <span th:text="${evento.nome}">
+                                    Aniversário do José
+                                </span>
+                            </strong>
+                        </p>
+
+                        <p>
+                            <strong>
+                                Local:
+                                <span th:text="${evento.local}">
+                                    Clube
+                                </span>
+                            </strong>
+                        </p>
+
+                        <p>
+                            <strong>
+                                Data:
+                                <span th:text="${evento.data}">
+                                    25/02/2021
+                                </span>
+                            </strong>
+                        </p>
+
+                        <p>
+                            <strong>
+                                Horário:
+                                <span th:text="${evento.horario}">
+                                    20:00
+                                </span>
+                            </strong>
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
+        <!-- FORMULÁRIO DE CONVIDADO -->
+        <div class="row">
+            <div class="col s12">
 
-		</div>
+                <div class="card">
+                    <div class="card-content">
+
+                        <span class="card-title">
+                            Adicionar Convidado
+                        </span>
+<form th:action="@{'/eventos/' + ${evento.id}}"
+      method="post">
+<div>
+<input type="hidden" name="id" th:value="${convidado != null ? convidado.id : ''}" readonly="readonly">
+</div>
+                            <div>
+                                <label>Nome:</label>s
+                                <input type="text"
+                                       name="nome"
+                                       th:value="${convidado != null ? convidado.nome : ''}">
+                            </div>
+
+                            <div>
+                                <label>RG:</label>
+                                <input type="text"
+                                       name="rg"
+                                       th:value="${convidado != null ? convidado.rg : ''}">
+                            </div>
+
+                            <div>
+                                <button type="submit"
+                                        class="btn">
+                                    Salvar
+                                </button>
+
+                                <button type="reset"
+                                        class="btn">
+                                    Limpar
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- LISTA DE CONVIDADOS -->
+        <div class="row">
+            <div class="col s12">
+
+                <div class="card">
+                    <div class="card-content">
+
+                        <span class="card-title">
+                            Convidados
+                        </span>
+
+                        <table class="highlight">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>RG</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr th:each="c : ${convidados}">
+
+                                    <td th:text="${c.id}">
+                                        Id
+                                    </td>
+
+                                    <td th:text="${c.nome}">
+                                        Nome
+                                    </td>
+
+                                    <td th:text="${c.rg}">
+                                        RG
+                                    </td>
+
+                                    <td>
+
+                                        <!-- EDITAR CONVIDADO -->
+                                        <a th:href="@{/eventos/{idEvento}/convidados/{idConvidado}/selecionar(
+                                            idEvento=${evento.id},
+                                            idConvidado=${c.id}
+                                        )}">
+
+                                            <i class="material-icons">
+                                                edit
+                                            </i>
+
+                                        </a>
+
+
+                                        <!-- REMOVER CONVIDADO -->
+                                        <a th:href="@{/eventos/{idEvento}/convidados/{idConvidado}/remover(
+                                            idEvento=${evento.id},
+                                            idConvidado=${c.id}
+                                        )}">
+
+                                            <i class="material-icons">
+                                                delete
+                                            </i>
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>
